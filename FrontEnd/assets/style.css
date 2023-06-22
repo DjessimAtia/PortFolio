@@ -185,4 +185,31 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
+/*AJOUT DE CSS******/
+.filtres {
+	display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    margin: 50px 0;
+}
+.bouton {
+	
+	display: flex;
+    align-items: center;
+    border: 1px #1d6154 solid;
+    border-radius: 60px;
+    color: #1d6154;
+    background: #fff;
+    height: 28px;
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    padding: 3px 20px;
+    cursor: pointer;
+}
+.selected{
+	color: white;
+	background-color: #1D6154;
+}
