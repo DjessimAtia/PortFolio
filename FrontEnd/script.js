@@ -18,7 +18,7 @@ async function main() {
   await GetFiltres(); // Récupère les filtres depuis l'API
 
   await getWorks(); // Récupère les travaux depuis l'API
-
+  token();
 }
 
  
@@ -58,8 +58,8 @@ async function getWorks(categoryId) {
   }catch (error) {
 
     console.error("An error occurred while retrieving works:", error);
-
-    gallery.innerHTML= "Oups... Suite à problème technqiue, la gallerie n'est pas disponible, veuillez rééssayer ultériurement";
+    gallery.classList.remove('gallery')
+    gallery.textContent= "Oups... Suite à problème technqiue, la gallerie n'est pas disponible, veuillez rééssayer ultériurement";
 
   }
 
@@ -110,124 +110,93 @@ function displayWorks(dataWork) {
 async function GetFiltres() {
 
  
-
+  try{
   await fetch("http://localhost:5678/api/categories")
 
-    // Si le fetch fonctionne on récupère les données en .json; Sinon on affiche une erreur
+   .then (response => response.json())
+   .then(data => {
+    displayCategorie(data)
+   }
+    )
+}catch{
+   console.error("An error occurred while retrieving works:",);
 
-    .then((response) => {
+    filtres.innerHTML= "Oups... Suite à problème technique, les filtres  ne sont  pas disponible, veuillez rééssayer ultériurement";
 
-      if (response.ok) {
+}
+}
+function boutonTout(){
+  const boutonTout = document.createElement('div');
+  boutonTout.classList.add('bouton');
+  boutonTout.classList.add('selected')
+  boutonTout.textContent = 'Tout';
+  boutonTout.setAttribute('data-tag', 'Tout');
 
-        return response.json();
+  filtres.appendChild(boutonTout);
 
-      } else {
+}
+function displayCategorie(Filtres){
+  boutonTout();
+  Filtres.forEach((filtre) => {
+    const bouton = document.createElement('div');
+    bouton.classList.add('bouton');
+    bouton.textContent = filtre.name;
+    bouton.setAttribute("data-tag", filtre.name);
+    bouton.setAttribute("data-id", filtre.id);
+    filtres.appendChild(bouton);
+  });
+  const buttons = document.querySelectorAll(".filtres .bouton");
+  
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      let buttonTag = button.dataset.tag;
+      console.log(buttonTag);
+      let categorieId = button.getAttribute("data-id");
+      console.log(categorieId);
 
-        console.log("Erreur dans la récupération des donnés de l'API");
-
-      }
-
-    })
-
-    //On récupère chaque categorie
-
-    .then((categories) => {
-
-      const boutonTout = document.createElement('div');
-
-      boutonTout.classList.add('bouton');
-
-      boutonTout.textContent = 'Tout';
-
-      //boutonTout.()id = '0';
-
-      //boutonTout.setAttribute("data-id", category.id);
-
-      // Ajoute le bouton "Tout" à la div des filtres
-
-      filtres.appendChild(boutonTout);
-
-      //Auxquelles on applique la fonction createButton
-
-      categories.forEach((filtre) => {
-
-       //on cree une div bouton, on lui donne la class css('bouton') on lui donne les données reccuperer et on le place dans la filtreDiv
-
-        const bouton = document.createElement('div');
-
-        bouton.classList.add('bouton');
-
-        bouton.textContent = filtre.name;    
-
-        bouton.setAttribute("data-tag", filtre.name);
-
-        bouton.setAttribute("data-id", filtre.id);
-
-        filtres.appendChild(bouton);
-
-       
-
-      });
-
-    })
-
- 
-
-    .then((filtre) => {
-
-      //on récupère les boutons
-
-      const buttons = document.querySelectorAll(".filtres .bouton");
-
-     
-
-     
-
-      buttons.forEach((button) => {
-
-        //Pour chaque bouton, au clic
-
-        button.addEventListener("click", function () {
-
-          // Get (et Affiche le data-tag)
-
-          let buttonTag = button.dataset.tag;
-
-          console.log(buttonTag);
-
- 
-
-          //Get catégorie id
-
-          let categorieId = button.getAttribute("data-id");
-
-          console.log(categorieId);
-
- 
-
-          //on enlève, pour chaque bouton la classe selected
-
-          buttons.forEach((button) => button.classList.remove("selected"));
-
-          //puis on ajoute la classe selected au bouton cliqué
-
-          this.classList.add("selected");
-
-          // On récupère les works de l'API en fonction des categories
-
-          getWorks(categorieId);
-
-        });
-
-      });
-
-    })
-
-    .catch((error) => {
-
-      console.log(error);
-
-    })}
-
-/*    MODAL */
-
+      buttons.forEach((button) => button.classList.remove("selected"));
+      this.classList.add("selected");
+      getWorks(categorieId);
+    });
+  });
+}
+//Changement de L'Index pour le Admin
+function token() {
+  //on Recupere le tokken de connexion 
+  const token = sessionStorage.getItem('token');
+  if (token) {
+    //Changement de Header
+    
+    const baniere = document.querySelector('.Baniere')
+    baniere.classList.remove('Baniere')
+    baniere.classList.add('baniere')
+    filtres.classList.add('display')
+    console.log('Token  valider.');
+    //Icone de figure
+   const icone = document.querySelector('.display')
+    icone.classList.remove('display')
+    //Icone de Article Introduction
+   const fleche = document.querySelector('.display')
+   fleche.classList.remove('display')
+   const modifier = document.getElementById('modifier')
+   modifier.classList.add('modifier')
+   const login = document.getElementById('login')
+   login.innerHTML='logout'
+   //Bouton pour modal
+   const modal = document.getElementById('modal')
+   const croix = document.querySelector('.croix')
+   modal.classList.add('display')
+   modifier.addEventListener("click", function() {
+    modal.classList.remove('display')
+    console.log('bouton pour modal');
+  })
+  croix.addEventListener('click', function() {
+    modal.classList.add('display');
+    console.log('bouton pour fermer la modal');
+  });
+  
+  } else {
+    console.log('Token invalide.');
+    
+  }
+}

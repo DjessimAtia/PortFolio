@@ -111,6 +111,47 @@ body {
 	line-height: 1;
 }
 
+.baniere {
+	background-color: #000;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+
+.edition {
+	display: flex;
+	color: #fff;
+	align-items: center;
+	gap: 10px;
+}
+
+.edition img {
+	width: 15px;
+	height: 15px;
+}
+
+.Baniere {
+	display: none;
+}
+
+.baniere button {
+	border: none;
+	background-color: #fff;
+	border-radius: 60px;
+	height: 38px;
+	font-weight: 500;
+	padding: 10px 20px;
+	font-family: "Work Sans";
+}
+
+.baniere .fa-solid {
+	background: rgba(255, 255, 255, 1);
+
+	color: white;
+}
+
 ol,
 ul {
 	list-style: none;
@@ -197,7 +238,11 @@ li:hover {
 }
 
 #introduction figure {
-	flex: 1
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
 }
 
 #introduction img {
@@ -322,10 +367,11 @@ footer nav ul {
 }
 
 /* Login*/
-.login{
+a {
 	text-decoration: none;
 	color: black;
 }
+
 .connexion {
 	display: flex;
 
@@ -348,32 +394,111 @@ footer nav ul {
 	height: 51px;
 	Width: 379px;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-border: none;
+	border: none;
 
 }
+
 .affichage {
 	display: flex;
-    flex-direction: column;
-    gap: 16px;
+	flex-direction: column;
+	gap: 16px;
 }
+
 .connexion .submit {
 	width: 179px;
-height: 36px;
-cursor: pointer;
-border-radius: 60px
+	height: 36px;
+	cursor: pointer;
+	border-radius: 60px
+}
+
+.Oublier {
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Work Sans";
+	font-weight: 500;
+	color: #3d3d3d;
+	text-align: center;
+	text-decoration: underline;
+}
+
+.error {
+	color: red;
+}
+
+.displayflex {
+	display: flex;
+}
+
+.display {
+
+	display: none;
+}
+
+.iconemodifier {
+	position: relative;
+	display: flex;
+
 
 }
-.Oublier{
-    width: 100%;
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	font-family: "Work Sans";
-    font-weight: 500;
-    color: #3d3d3d;
-    text-align: center;
+
+.icone {
+	position: absolute;
 }
-.error{
-	color: red;
+
+.pen {
+	margin-left: 5px;
+	margin-top: -5px;
+}
+
+.modifier {
+	margin-bottom: 2em;
+	;
+	display: flex;
+	cursor: pointer;
+}
+
+.projets {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+	margin-bottom: 70px;
+
+}
+
+.margin {
+	margin-left: 60px;
+	margin-top: 20px;
+}
+
+.modal {
+	position: absolute;
+	width: 630px;
+	height: 731px;
+	top: 660px;
+	left: 405px;
+	border-radius: 10px;
+	z-index: 9999;
+	/* Pour s'assurer que la modal est au-dessus des autres éléments */
+}
+
+.modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	max-width: 630px;
+	max-height: 731px;
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 20px;
+}
+.croix{
+	left: 95%;
+	position: absolute;
 }
