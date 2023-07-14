@@ -45,7 +45,8 @@ async function login() {
 }
 // Gestionnaire d'événement pour le clic sur le bouton de soumission
 const submit = document.getElementById('submit');
-submit.addEventListener('click', function (event) {
+submit.addEventListener('submit', function (event) {
   event.preventDefault();
   login();
 });
+
