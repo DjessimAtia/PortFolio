@@ -1,4 +1,13 @@
 const erreur = document.querySelector('.error')
+
+
+// Gestionnaire d'événement pour le clic sur le bouton de soumission
+const submit = document.getElementById('submit');
+submit.addEventListener('submit', function (event) {
+  event.preventDefault();
+  login();
+});
+
 // Fonction asynchrone pour gérer la connexion
 async function login() {
   // Récupération des éléments de formulaire par leur ID
@@ -21,7 +30,7 @@ async function login() {
       'Content-Type': 'application/json;charset=utf-8'
     },
     // Conversion de l'objet user en chaîne JSON et affectation au corps de la requête
-    body: JSON.stringify(user)
+   body: JSON.stringify(user) 
   });
 
   // Vérification du statut de la réponse
@@ -43,10 +52,5 @@ async function login() {
   erreur.innerHTML = ('Probleme sur le site veuillez vous recconecter ultierreurment')
 }
 }
-// Gestionnaire d'événement pour le clic sur le bouton de soumission
-const submit = document.getElementById('submit');
-submit.addEventListener('submit', function (event) {
-  event.preventDefault();
-  login();
-});
+
 
