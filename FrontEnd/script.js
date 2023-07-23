@@ -3,7 +3,7 @@ const filtres = document.querySelector('.filtres');
 const galleryModal = document.querySelector('.gallery-modal');
 const modal = document.getElementById('modal');
 const selectForm = document.querySelector('#Categories');
-
+const DeuxiemeModal = document.getElementById('modal-ajout');
 const token = sessionStorage.getItem('token');
 
 // Point d'entrée du script
@@ -183,8 +183,8 @@ function displayModal(project) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
     if (confirmation) {
       deleteProject(project.id);
-    }
-    console.log('Élément supprimé :', project.categoryId);
+    
+    console.log('Élément supprimé :', project.categoryId);}
   });
 }
 
@@ -192,27 +192,32 @@ const boutonModal = document.querySelector('.bouton-modal');
 boutonModal.addEventListener('click', function () {
   const modalDelete = document.getElementById('modal-delete')
   modalDelete.classList.add('hidden')
-  const DeuxiemeModal = document.getElementById('modal-ajout');
+ 
   DeuxiemeModal.classList.remove('hidden');
   const flecheGauche = document.querySelector('.fleche');
   flecheGauche.addEventListener('click', function () {
     DeuxiemeModal.classList.add('hidden');
     modalDelete.classList.remove('hidden')
+    resetForm();
   });
   const croix = document.getElementById('Deuxieme-croix');
   croix.addEventListener('click', function () {
    modal.classList.add('hidden')
    DeuxiemeModal.classList.add('hidden')
     console.log('Fermer la modal');
+  
   });
  // Fermeture de la modal quand on click en dehors 
-  modal.addEventListener('click', function(event){
-    if(event.target == modal){
-    modal.classList.add('hidden')
-    DeuxiemeModal.classList.add('hidden')}
-  })
+ 
+
   
 });
+modal.addEventListener('click', function(event){
+  if(event.target == modal){
+  modal.classList.add('hidden')
+  DeuxiemeModal.classList.add('hidden')
+  resetForm();
+}})
 //Supression de Projet
 async function deleteProject(id) {
   try {
@@ -328,6 +333,9 @@ async function EnvoieProject() {
     if (response.ok) {
       console.log('Photo envoyée avec succès');
       await getWorks();
+      resetForm();
+      modal.classList.add('hidden')
+      DeuxiemeModal.classList.add('hidden')
     } else {
       console.error("Échec de l'envoi de la photo");
     }
@@ -338,3 +346,37 @@ async function EnvoieProject() {
     );
   }
 }
+function resetForm() {
+  // Reset the form fields
+  document.getElementById('title').value = '';
+  document.getElementById('Categories').value = '';
+
+  // Créer une image pour afficher l'icône "trash-can-solid.svg"
+  const iconImg = document.createElement('img');
+  iconImg.src = '';
+  iconImg.classList.add('icon-img');
+
+  // Remplacer le contenu du label par l'icône et les éléments "Ajouter une photo" et "jpg, png : 4mo max"
+  const labelAjoutPhoto = document.getElementById('add-photo');
+  labelAjoutPhoto.innerHTML = `
+    <img src="./assets/icons/picture-svgrepo-com 1.svg" id="image-ajouter" alt="">
+   
+  `;
+
+  // Ajouter les éléments "Ajouter une photo" et "jpg, png : 4mo max"
+  const boutonAjouterPhoto = document.createElement('div');
+  boutonAjouterPhoto.classList.add('bouton');
+  boutonAjouterPhoto.innerHTML = '<p>+ Ajouter une photo</p>';
+
+  const txtAjoutPhoto = document.createElement('p');
+  txtAjoutPhoto.classList.add('txt-ajout-photo');
+  txtAjoutPhoto.textContent = 'jpg, png : 4mo max';
+
+  labelAjoutPhoto.appendChild(boutonAjouterPhoto);
+  labelAjoutPhoto.appendChild(txtAjoutPhoto);
+
+  // Réinitialiser le bouton "Valider"
+  const validerButton = document.getElementById('valider');
+  validerButton.classList.remove('selected');
+}
+
